@@ -1,0 +1,68 @@
+v 3
+d `RTI_EGRMA' Package for cleaning and analyzing EGRMA
+
+d Distribution-date: 25Aug2012
+ 
+d Alex Sax, Stanford University
+d (asax@stanford.edu)
+d Michael Costello
+d (mcostello@rti.org)
+
+d ado files
+f lib/asmean.ado        
+f lib/egrmaclean.ado
+f lib/egranalysis.ado     
+f lib/facwts.ado    
+f lib/irrcheck.ado      
+f lib/outtable.ado      
+f lib/phonemesearch.ado 
+f lib/pivottable.ado    
+f lib/promote.ado    
+f lib/qartiupdate.ado   
+f lib/rollback.ado
+f lib/rtiupdate.ado     
+f lib/sbrtiupdate.ado   
+f lib/setvar.ado        
+f lib/sigbar.ado   
+f lib/ssmeclean.ado     
+f lib/sysppssample.ado  
+f lib/tableout.ado      
+f lib/testrtiupdate.ado 
+* f lib/config.do         
+
+
+d help files
+f doc/egrmaclean.sthlp  
+f doc/facwts.sthlp      
+f doc/irrcheck.sthlp    
+f doc/outtable.sthlp    
+f doc/phonemesearch.sthlp
+f doc/rti.sthlp         
+f doc/rtiupdate.sthlp   
+f doc/setvar.sthlp      
+f doc/sigbar.sthlp      
+f doc/ssmeclean.sthlp   
+f doc/sysppssample.sthlp
+f doc/tableout.sthlp   
+f doc/pivottable.sthlp    
+
+d vendor assets
+f vendor/cf3.ado           
+f vendor/cf3.hlp           
+f vendor/diff.ado          
+f vendor/diff.sthlp        
+f vendor/findname.ado      
+f vendor/findname.hlp      
+f vendor/groups.ado        
+f vendor/groups.hlp        
+f vendor/hotdeck.ado       
+f vendor/hotdeck.sthlp     
+f vendor/outreg2.ado       
+f vendor/radar.ado         
+f vendor/radar.sthlp       
+f vendor/tabout.ado        
+f vendor/tabout.hlp 
+
+
+
+* End rti.pkg
