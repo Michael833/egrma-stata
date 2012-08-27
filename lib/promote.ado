@@ -13,6 +13,6 @@
 program promote
 	syntax anything
 	
-copy `"Z:\Task 3 EGRA\Final Databases\User\Alex\RTIegrma (test)/`anything'"' `"Z:\Task 3 EGRA\Final Databases\stata add-ons/`anything'"', replace
+copy `"Z:\Task 3 EGRA\Final Databases\User\Alex\RTIegrma (test)/`anything'"' `"Z:\Task 3 EGRA\Final Databases\egrma-stata/`anything'"', replace
 
 end

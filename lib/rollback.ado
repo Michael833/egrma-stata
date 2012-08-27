@@ -14,7 +14,7 @@ program rollback
 	syntax anything
 
 capture confirm file `"Z:\Task 3 EGRA\Final Databases\User\Alex\RTIegrma (test)/`anything'"'
-if _rc copy `"Z:\Task 3 EGRA\Final Databases\stata add-ons/`anything'"' `"Z:\Task 3 EGRA\Final Databases\User\Alex\RTIegrma (test)/`anything'"', replace
-rm `"Z:\Task 3 EGRA\Final Databases\stata add-ons/`anything'"'
+if _rc copy `"Z:\Task 3 EGRA\Final Databases\egrma-stata/`anything'"' `"Z:\Task 3 EGRA\Final Databases\User\Alex\RTIegrma (test)/`anything'"', replace
+rm `"Z:\Task 3 EGRA\Final Databases\egrma-stata/`anything'"'
 
 end
