@@ -5,18 +5,19 @@
 * in tableout, fix label when encoded.
 
 program egranalysis
-syntax using/, [noEXECute noCONTingencytable noFREQuencytable]
+syntax using/, [noEXECute SKIPPIVotunit SKIPTABLeunit SKIPSIGbarunit]
 
 ****************************************
 *  Apply settings to current data set  *
 ****************************************
-loc all_config_settings "fluency geographics subpops treatment overs genTableByStudentFor genTableBySchoolFor"
+loc all_config_settings "fluency geographics subpops treatment overs genTableByStudentFor genTableBySchoolFor sigbarVariables controls"
+getegrmalocations
 capture include "config.do" //user defined?
-if _rc {
-	capture include "Z:\Task 3 EGRA\Final Databases\User\Alex\config.do" //default
-	display "Creating standard analysis"
+if !_rc display "Creating country-specific analysis" 
+else {
+	if _rc capture include "`s(config)'" //default
+	if !_rc display "Creating standard analysis"
 }
-else display "Creating country-specific analysis" 
 di ""
 di ""
 if _rc di "No configuration file found.  Make sure you're connected to the RTI EPS server or put a config.do file in your current working directory. Current working directory: `c(pwd)'"
@@ -47,8 +48,24 @@ capture mkdir "`using'/Graphs"
 if _rc di "created:     Graphs/"
 di "" 
 
-{ /* Create contingency tables */
-if "`contingencytable'"!="nocontingencytable" {
+
+
+*************************************
+*  Create a header for the do file  *
+*************************************
+file write analysis `"* Analysis for `c(filename)' "' _n
+file write analysis `"* Dataset version: `c(filedate)' "' _n
+file write analysis `"* By `c(username)'"' _n
+file write analysis `"* On `c(current_date)' | At c(current_time)"' _n
+file write analysis  _n
+file write analysis  _n
+file write analysis `"* use `c(filename)', clear"' _n
+file write analysis  _n
+file write analysis  `"*Create contingency tables*"' _n
+file write analysis  _n
+
+
+if "`skippivotunit'"=="" { /* Create contingency tables */
 	di "Writing contingency tables..."
 	foreach set in `subpops' `double_subpops' {
 		file write analysis `"* Create -outtables- by  `set'"' _n
@@ -63,11 +80,9 @@ if "`contingencytable'"!="nocontingencytable" {
 		file write analysis _n
 	}
 }
-}
 
 
-{ /* Create frequency tables */
-if "`freqtable'"!="nofreqtable" {
+if "`skiptableunit'"=="" { /* Create frequency tables */
 	* Sampling uint: Student
 	local cell=3
 	file write analysis "" _n(3) 
@@ -90,11 +105,31 @@ if "`freqtable'"!="nofreqtable" {
 	file write analysis `"tableout school grade using "`using'/Contingency Tables/Demographic Breakdown.xlsx",  contents((count) id) exceloptions(`tableoutExcelOptions' cell(O4)) "' _n
 	quietly levelsof grade, l(offset)
 	local offset: word count `offset'
-	local column=`column'+`offset'+2
+	local column=`column'+`offset'
 	excelcolumn `column'
 	file write analysis `"tableout school female grade using "`using'/Contingency Tables/Demographic Breakdown.xlsx", contents((count) id) exceloptions(`tableoutExcelOptions' cell(`r(column)'4))"' _n 
 }
+
+if "`skipsigbarunit'"=="" { /* Create sigbar graphs */
+local graphlist ""
+foreach variable in `sigbarVariables' {
+	sigbar exit_interview*, dvar(`variable') control(`controls') twow(nodraw)
+	graph export "/Contingency Tables/Changes in `variable'"
+	sigbar `controls' dvar(`variable') twow(nodraw)
+	graph export "/Contingency Tables/`variable' vs controls"
+	local graphlist `"`graphlist' "/Contingency Tables/Changes in `variable'" "/Contingency Tables/`variable' vs controls""'
+} 
+graph combine `graphlist', saving("/Contingency Tables/All graphs.pdf") cols(1)
+foreach graph in `graphlist' {
+	graph use "`graph'"
+	graph export "`graph'.png"
 }
+
+
+
+}
+
+
 file close analysis
 if "`execute'"!="noexecute" do "`using'/analysis.do"
 end

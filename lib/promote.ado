@@ -12,7 +12,6 @@
 
 program promote
 	syntax anything
-	
-copy `"Z:\Task 3 EGRA\Final Databases\User\Alex\RTIegrma (test)/`anything'"' `"Z:\Task 3 EGRA\Final Databases\egrma-stata/`anything'"', replace
-
+	getegrmalocations
+	copy `"`s(test)'/`anything'"' `"`s(production)'/`anything'"', replace
 end

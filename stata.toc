@@ -1,5 +1,6 @@
 v 2
-d Stata programs by Alex Sax, Stanford University   
+d Stata programs by Alex Sax | Stanford University
+d And also by Michael Costello | RTI International   
 d Last updated: 25 Aug 2012 
 
 p rti_egrma :	EGRA/EGMA cleaning and analysis programs

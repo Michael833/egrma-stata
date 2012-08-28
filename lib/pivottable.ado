@@ -285,7 +285,8 @@ foreach subtest in `varlist' {
 	quietly save "`mastertable'", replace 
 	restore
 }
-
+}
+{/* CLEAN AND RESHAPE */
 ***********************************************
 * Merge calculated variables and demographics *
 * Then reshape data                           *
@@ -459,7 +460,7 @@ else  {
   ereturn local open = `"use "`using'", clear"'
 }
 
-
+}
 
 
 end

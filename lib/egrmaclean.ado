@@ -12,9 +12,7 @@ program define egrmaclean, rclass
   syntax varlist , [READwords(numlist) UNTREADwords(numlist) lang(str) MLEVels(str) print noUPdate write misstime(str) EQuate(str)]
   version 12
  
- 
-  global codebook_handle "\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\Codebook for EGRA & EGMA.xlsx"
-  global label_file_handle "\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\Labels for EGRA & EGMA.do"
+  getegrmalocations
   global local_codebook_handle "`c(sysdir_plus)'Codebook for EGRA & EGMA.xlsx"
   global local_label_file_handle "`c(sysdir_plus)'Labels for EGRA & EGMA.do"
   global lang "`lang'"
@@ -53,19 +51,19 @@ set varabbrev on
 // If we have access to the RTI server then pull the codebook into a bunch of mata matrices
 // and store them in the file denoted by $local_codebook_handle
 // Otherwise, just use the local version
-  capture confirm file "$codebook_handle"
+  capture confirm file "`s(codebook)'"
   if !_rc & "`update'"==""{
     preserve
-	import excel using "$codebook_handle", clear firstrow sheet("Demographics")
+	import excel using "`s(codebook)'", clear firstrow sheet("Demographics")
     create_matrix_from_data demographicInfo
-	import excel using "$codebook_handle", clear firstrow sheet("Test Sections")
+	import excel using "`s(codebook)'", clear firstrow sheet("Test Sections")
     create_matrix_from_data testSectionInfo
-    import excel using "$codebook_handle", clear firstrow sheet("Super Summary")
+    import excel using "`s(codebook)'", clear firstrow sheet("Super Summary")
     create_matrix_from_data superSummaryInfo
-    import excel using "$codebook_handle", clear firstrow sheet("Commonly Misnamed Variables")
+    import excel using "`s(codebook)'", clear firstrow sheet("Commonly Misnamed Variables")
     create_matrix_from_data renpfixInfo
 	
-	quietly copy "$label_file_handle" "$local_label_file_handle", replace
+	quietly copy "`s(label_file)'" "$local_label_file_handle", replace
 	
 	save_matrices demographicInfo testSectionInfo superSummaryInfo renpfixInfo using "$local_codebook_handle"
     display "Updated local codebook"

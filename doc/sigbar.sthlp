@@ -9,9 +9,10 @@
 
 {p 8 18 2}
 {cmd:sigbar} {help varlist}
-[weight] [if]
-[{cmd:,}
-{opt dvar(}str{cmd:)}
+[weight] [if] [in]
+{cmd:,}[
+{cmd:dvar(}str{cmd:)}
+{opt cont:rol(varlist)}
 {opt nolab:el}
 {opt nogra:ph}
 {opt g:roup}{cmd:(}{help varname}{cmd:)}
@@ -38,6 +39,8 @@ gives you the option of grouping these variables.
 
 
 {title:Options}
+{phang}
+{opt cont:rol} adds these variables in to the regrssion and controls for them.  Control results not reported.
 
 {phang}
 {opt nolab:el} puts variable names instead of variable labels on the bargraph.
@@ -106,11 +109,14 @@ student scores.
 
 {phang}
 Locals
+
 {cmd:r(sigvars)} a list of significant variables
+
 {cmd:r(coef_list)} a list of corresponding coefficients
 
 {phang}
 Matrices
+
 {cmd:r(coefs)} a matrix of coefficients
 
 

@@ -22,8 +22,11 @@ local double_subpops `""grade female"  "female grade"   "grade region"    "regio
 loc genTableBySchoolFor 	`""grade female" "grade""'
 loc genTableByStudentFor 	"school grade" "grade female"
 
+** Sigbar
+loc sigbarVariables "`fluency' `zeroscores' `scores'"
+loc controls "grade female region state"
+
 ** Output
-local location 			"C:\Documents and Settings\asax\Desktop"
 local outputvars 		mean sd count se ci N tstats effects
 local svytype 			svy iid
 local outtableExcelOptions 		"sheet(\`subtests' \`set') sheetmodify cell(A1) first(var)"

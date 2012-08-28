@@ -9,7 +9,7 @@
 
 
 program define sigbar, rclass
-	syntax varlist [pw aw fw] [if] [in] [, dvar(varname) alpha(real .05) LOGit SVY noLABel noGRAph GRoup(str) LEGendoptions(str) TWOWay_options(str) lsize(str) hello]
+	syntax varlist [pw aw fw] [if] [in] [, CONTrol(str) dvar(varname) alpha(real .05) LOGit SVY noLABel noGRAph GRoup(str) LEGendoptions(str) TWOWay_options(str) lsize(str) hello]
 	version 11
 
 	
@@ -19,6 +19,7 @@ if "`lsize'"=="" local lsize ""
 if "`svy'" != "" local `svy' = "svy:" 
 if "`logit'"=="logit" local regress_type "logit"
 else local regress_type "regres"
+if "`control'"!="" local control_note "note(Beta coefficients controlled for: `control'"
 if "`hello'"!=""{
 	di in red "Hi there!"
 	di in green "Now back to work."
@@ -33,7 +34,8 @@ if "`dvar'"=="" {
 
 *Run regressions
 foreach variable of varlist `varlist' {
-	quietly `svy' `regress_type' `dvar' `varlist' [`weight'`exp'] `if'
+	capture `svy' `regress_type' `dvar' `control' `variable' [`weight'`exp'] `if' `in'
+	if _rc==2000 di in gr "note: `dvar' vs `variable' contains no observations"
 	*Test and move to significant list
 	quietly: test `variable'
 	if r(p)<`alpha' {
@@ -107,13 +109,13 @@ if "`group'" == ""{
 		*And apply labels
 		quietly: graph hbar (firstnm) `beta_coef' , scheme(s2color) over(`variable_label', sort(`beta_coef') ///
 			label(labsize(vsmall))) asyvars showyvars cw blabel(bar, size(`lsize') format(%9.1g)) ytitle(`: variable label `dvar'' Change) ///
-			title(Change in `: variable label `dvar'' by Factor) legend(off) `twoway_options'
+			title(Change in `: variable label `dvar'' by Factor) legend(off) `twoway_options' `control_note'
 	}
 	else {
 		*Or don't
 		quietly: graph hbar (firstnm) `beta_coef' ,scheme(s2color) over(`significant_variable', sort(`beta_coef') ///
 			label(labsize(vsmall))) asyvars showyvars cw blabel(bar, size(`lsize') format(%9.1g)) ytitle(`: variable label `dvar'' Change) ///
-			title(Change in `: variable label `dvar'' by Factor) legend(off) `twoway_options'
+			title(Change in `: variable label `dvar'' by Factor) legend(off) `twoway_options' `control_note'
 	}
 }
 else {
@@ -122,7 +124,7 @@ else {
 		label(nolabel)) asyvars showyvars cw over(`variable_label', sort(`beta_coef')  ///
 		label(labsize(tiny))) blabel(bar, size(`lsize') format(%9.1g)) ///
 		title(Change in `: variable label `dvar'' by Factor) ytitle(`: variable label `dvar'' Change) ///
-		legend(on cols(1) `legendoptions') `twoway_options'
+		legend(on cols(1) `legendoptions') `twoway_options' `control_note'
 	if _rc==2000 di as err "group option does not apply to any variables"
 }
 }

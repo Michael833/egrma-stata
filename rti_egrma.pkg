@@ -13,22 +13,20 @@ f lib/asmean.ado
 f lib/egrmaclean.ado
 f lib/egranalysis.ado     
 f lib/facwts.ado    
+f lib/getegrmalocations.ado
 f lib/irrcheck.ado      
 f lib/outtable.ado      
 f lib/phonemesearch.ado 
 f lib/pivottable.ado    
 f lib/promote.ado    
-f lib/qartiupdate.ado   
 f lib/rollback.ado
 f lib/rtiupdate.ado     
-f lib/sbrtiupdate.ado   
 f lib/setvar.ado        
 f lib/sigbar.ado   
 f lib/ssmeclean.ado     
 f lib/sysppssample.ado  
 f lib/tableout.ado      
 f lib/testrtiupdate.ado 
-* f lib/config.do         
 
 
 d help files
@@ -62,7 +60,5 @@ f vendor/radar.ado
 f vendor/radar.sthlp       
 f vendor/tabout.ado        
 f vendor/tabout.hlp 
-
-
 
 * End rti.pkg
