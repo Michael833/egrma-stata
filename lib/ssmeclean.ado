@@ -2,34 +2,37 @@ program define ssmeclean
 	syntax , [LANGuages(str) Keeplength]
 
 {/*Read in codebook*/
+getegrmalocations
+local local_codebook "`c(tmpdir)'Codebook for EGRA & EGMA.xlsx"
+
 // find number of qs in each section
 preserve
-capture confirm file `"\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\Codebook for EGRA & EGMA.xlsx"'
+capture confirm file `"`s(codebook)'"'
 if !_rc & "`update'"==""{
-	import excel using "\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\Codebook for EGRA & EGMA.xlsx", clear firstrow sheet("SSME - COM")
-	quietly: export excel using "C:\Program Files\Stata12\docs\Codebook for EGRA & EGMA.xlsx", sheetreplace firstrow(variables) sheet("SSME - COM")
-	import excel using "\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\Codebook for EGRA & EGMA.xlsx", clear firstrow sheet("SSME - COR")
-	quietly: export excel using "C:\Program Files\Stata12\docs\Codebook for EGRA & EGMA.xlsx", sheetreplace firstrow(variables) sheet("SSME - COR")
-	import excel using "\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\Codebook for EGRA & EGMA.xlsx", clear firstrow sheet("SSME - CIN")
-	quietly: export excel using "C:\Program Files\Stata12\docs\Codebook for EGRA & EGMA.xlsx", sheetreplace firstrow(variables) sheet("SSME - CIN")
-	import excel using "\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\Codebook for EGRA & EGMA.xlsx", clear firstrow sheet("Labels")
-	quietly: export excel using "C:\Program Files\Stata12\docs\Codebook for EGRA & EGMA.xlsx", sheetreplace firstrow(variables) sheet("Labels")
+	import excel using "`s(codebook)'", clear firstrow sheet("SSME - COM")
+	quietly: export excel using "`local_codebook'", sheetreplace firstrow(variables) sheet("SSME - COM")
+	import excel using "`s(codebook)'", clear firstrow sheet("SSME - COR")
+	quietly: export excel using "`local_codebook'", sheetreplace firstrow(variables) sheet("SSME - COR")
+	import excel using "`s(codebook)'", clear firstrow sheet("SSME - CIN")
+	quietly: export excel using "`local_codebook'", sheetreplace firstrow(variables) sheet("SSME - CIN")
+	import excel using "`s(codebook)'", clear firstrow sheet("Labels")
+	quietly: export excel using "`local_codebook'", sheetreplace firstrow(variables) sheet("Labels")
 	}
 
 //Save info into matrices
-import excel using "C:\Program Files\Stata12\docs\Codebook for EGRA & EGMA.xlsx", clear firstrow sheet("SSME - COM")
+import excel using "`local_codebook'", clear firstrow sheet("SSME - COM")
 mata: com_names = st_sdata(.,st_varindex("comnames"))
 mata: com_labs = st_sdata(.,st_varindex("comlabs")) 
 mata: com_labnames =  st_sdata(.,st_varindex("comvlab"))
-import excel using "C:\Program Files\Stata12\docs\Codebook for EGRA & EGMA.xlsx", clear firstrow sheet("SSME - COR")
+import excel using "`local_codebook'", clear firstrow sheet("SSME - COR")
 mata: cor_names = st_sdata(.,st_varindex("cornames"))
 mata: cor_labs = st_sdata(.,st_varindex("corlabs")) 
 mata: cor_labnames =  st_sdata(.,st_varindex("corvlab"))
-import excel using "C:\Program Files\Stata12\docs\Codebook for EGRA & EGMA.xlsx", clear firstrow sheet("SSME - CIN")
+import excel using "`local_codebook'", clear firstrow sheet("SSME - CIN")
 mata: cin_names = st_sdata(.,st_varindex("cinnames"))
 mata: cin_labs = st_sdata(.,st_varindex("cinlabs")) 
 mata: cin_labnames =  st_sdata(.,st_varindex("cinvlab"))
-import excel using "C:\Program Files\Stata12\docs\Codebook for EGRA & EGMA.xlsx", clear firstrow sheet("Labels")
+import excel using "`local_codebook'", clear firstrow sheet("Labels")
 mata: lab_names = st_sdata(.,st_varindex("Label1"))
 mata: lab_labs = st_sdata(.,st_varindex("Label2")) 
 restore
