@@ -10,8 +10,9 @@ d (mcostello@rti.org)
 
 d ado files
 f lib/asmean.ado        
-f lib/egrmaclean.ado
 f lib/egranalysis.ado     
+f lib/egrmaclean.ado
+f lib/egrmaversion.ado
 f lib/facwts.ado    
 f lib/getegrmalocations.ado
 f lib/irrcheck.ado      
@@ -27,7 +28,6 @@ f lib/ssmeclean.ado
 f lib/sysppssample.ado  
 f lib/tableout.ado      
 f lib/testrtiupdate.ado 
-
 
 d help files
 f doc/egrmaclean.sthlp  

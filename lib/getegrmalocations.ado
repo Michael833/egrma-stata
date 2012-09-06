@@ -6,7 +6,6 @@
 program getegrmalocations, sclass
 	local 			production 				"\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\egrma-stata\"
 	local 			on_access_rti_drive 	"`production'assets\on_access_rti_drive.do"	
-	sreturn local 	egrma_version 			"3"
 	sreturn local 	test 					"\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\User\Alex\RTIegrma (test)\"
 	sreturn local 	production 				"`production'"
 	sreturn local 	label_file 				"\\rtifile02\cidprojectshares\09354 EdData II\Task 3 EGRA\Final Databases\egrma-stata\assets\Labels for EGRA & EGMA.do"

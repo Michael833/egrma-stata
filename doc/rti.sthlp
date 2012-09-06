@@ -24,7 +24,7 @@ RTI EGRMA contains the following programs:
 {help irrcheck}:	Grades and creates summary output for a class of EGRA accessors.
 {help facwts}:		Makes a pie chart to show relative weights of significant variables.
 {help sysppssample}:	Systematically samples a data set.
-{help pgsearch}:	Returns words that contain only the given phonemes and/or graphemes.
+{help phonemesearch}:	Returns words that contain only the given phonemes and/or graphemes.
 {help ssmeclean}:	Clean SSME datasets.  
 
 {help rtiupdate}:  Updates RTI EGRMA package.
